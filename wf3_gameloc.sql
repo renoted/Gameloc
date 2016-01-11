@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 08 Janvier 2016 à 12:21
+-- Généré le :  Lun 11 Janvier 2016 à 17:16
 -- Version du serveur :  5.6.25
 -- Version de PHP :  5.6.11
 
@@ -23,6 +23,52 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `games`
+--
+
+CREATE TABLE IF NOT EXISTS `games` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `url_img` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `published_at` datetime NOT NULL,
+  `game_time` int(11) NOT NULL,
+  `is_available` tinyint(1) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `plateform_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `games`
+--
+
+INSERT INTO `games` (`id`, `name`, `url_img`, `description`, `published_at`, `game_time`, `is_available`, `created_at`, `updated_at`, `plateform_id`) VALUES
+(3, 'Call of Duty', 'http://image.noelshack.com/fichiers/2015/18/1430678955-boiii-boxart-ps4.jpg', 'jhgkjg', '2016-01-06 00:00:00', 15, 1, '2016-01-11 17:05:36', '2016-01-11 17:05:36', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `plateforms`
+--
+
+CREATE TABLE IF NOT EXISTS `plateforms` (
+  `id` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `plateforms`
+--
+
+INSERT INTO `plateforms` (`id`, `name`) VALUES
+(1, 'Xbox'),
+(2, 'PS4'),
+(3, 'PC');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `users`
 --
 
@@ -35,7 +81,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `adress` varchar(255) COLLATE utf16_unicode_ci NOT NULL,
   `zipcode` varchar(5) COLLATE utf16_unicode_ci NOT NULL,
   `town` varchar(50) COLLATE utf16_unicode_ci NOT NULL DEFAULT 'Paris',
-  `phone` varchar(10) COLLATE utf16_unicode_ci NOT NULL
+  `phone` varchar(10) COLLATE utf16_unicode_ci NOT NULL,
+  `latitude` decimal(10,8) DEFAULT NULL,
+  `longitude` decimal(11,8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
 
 --
@@ -43,11 +91,48 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 --
+-- Index pour la table `games`
+--
+ALTER TABLE `games`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `plateform_id` (`plateform_id`);
+
+--
+-- Index pour la table `plateforms`
+--
+ALTER TABLE `plateforms`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Index pour la table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `games`
+--
+ALTER TABLE `games`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT pour la table `plateforms`
+--
+ALTER TABLE `plateforms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- Contraintes pour les tables exportées
+--
+
+--
+-- Contraintes pour la table `games`
+--
+ALTER TABLE `games`
+  ADD CONSTRAINT `fk_plateform` FOREIGN KEY (`plateform_id`) REFERENCES `plateforms` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
