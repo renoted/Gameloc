@@ -1,3 +1,70 @@
+<?php
+
+  session_start();
+
+  require(__DIR__."/config/db.php");
+  require(__DIR__."/functions.php");
+  $page = "Connexion";
+
+  /*Récupération des données du formulaire*/
+  if(isset($_POST["submitBtn"])){
+    $email = trim(htmlentities($_POST["email"]));
+    $password = trim(htmlentities($_POST["password"]));
+  
+    /*Instanciation du tableau d'erreurs*/
+    $errors = [];
+
+    /*1. Contrôle du champ "Email" pour la sécurité */ 
+    $checkEmailMessage = check_email_format($email);
+    if($checkEmailMessage !== ""){
+      $errors["email"] = $checkEmailMessage; 
+    }
+
+    /*2. Contrôle du champ "Mot de passe" pour la sécurité */
+
+    $checkPasswordMessage = check_password_format($password, $confirmPassword);
+    if($checkPasswordMessage !== ""){
+      $errors["password"] = $checkPasswordMessage;
+    }
+
+     /*3. Recherche correspondance email/password dans la table users de la bdd */
+    $query = $pdo->prepare('SELECT * FROM users WHERE email = :email');
+    $query->bindValue(':email', $email, PDO::PARAM_STR);
+    $query->execute();
+    $resultUser = $query->fetch();
+
+    // Si l'utilisateur a été trouvé
+    if($resultUser) {
+      // Compare un password en clair avec un password haché
+      // Attention, PHP 5.5 ou plus !!! - Sinon, depuis 5.3.7 : https://github.com/ircmaxell/password_compat
+      $isValidPassword = password_verify($password, $resultUser['password']);
+
+      if($isValidPassword) {
+        // On stocke le user en session et on retire le password avant (pas très grave)
+        unset($resultUser['password']);
+        $_SESSION['user'] = $resultUser;
+
+        // On redirige l'utilisateur vers la page protégée profile.php
+        header("Location: profile.php");
+        die();
+      }
+      else {
+        $errors['password'] = "Wrong password.";
+      }
+    }
+    else {
+      $errors['user'] = "User with email not found.";
+    }
+
+    $_SESSION['loginErrors'] = $errors;
+    
+    header("Location: index.php");
+    die();
+  }
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +74,7 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="icon" href="img/logoGameloc.ico">
+  <link rel="icon" href="public/img/logoGameloc.ico">
 
   <title>Login</title>
 
@@ -32,27 +99,28 @@
       <div class="jumbotron">
           <div class="container">
             <?php
-            include 'header.php';
+            include 'include/header.php';
             ?>
            
           </div><!-- /.container -->
       </div><!-- /.jumbotron -->
 
       <!-- Copié de bootstrap : http://getbootstrap.com/css/#forms -->
-        <form method="POST" action="registerHandler.php">
+
+      <div class="container">
+        <form method="POST" action="#">
           <div class="form-group">
-                  <label for="email">Email</label>
+                  <label for="email">Adresse électronique</label>
                   <input type="text" class="form-control" id="email" name="email" placeholder="Email">
                 </div>
 
                 <div class="form-group">
-                  <label for="password">Password</label>
+                  <label for="password">Mot de passe</label>
                   <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                 </div>
-              <button type="submit" name="action" class="btn btn-primary btn-index">Valider</button>
+              <button type="submit" name="submitBtn" class="btn btn-primary btn-index">Valider</button>
         </form>
-
-        
+      </div><!-- /.container
 
 
 
@@ -64,4 +132,4 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     
   </body>
-  </html>
+</html>
