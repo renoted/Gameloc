@@ -31,14 +31,17 @@
 
       <div class="jumbotron">
           <div class="container">
+            <img src="public/img/Steam-01-128.png">
             <h1>Gameloc</h1>
             <p>Bienvenue dans la plus grande communauté de gamers sur Paris</p>
             <br>
             <p>Nous mettons les gamers en relation pour qu'ils puissent s'échanger les jeux vidéos de n'importe
             quelle plateforme</p><br>
             <p>(PC, Xbox, PS4)</p>
-            <button type="button" class="btn btn-success">Inscription</button>
-            <button type="button" class="btn btn-primary">Connexion</button>
+            <div id="container-btn">
+              <button type="button" class="btn btn-success btn-index"><a class="linkBtn" href="register.php">Inscription</a></button>
+              <button type="button" class="btn btn-primary btn-index"><a class="linkBtn" href="register.php">Connexion</a></button>
+            </div>
           </div><!-- /.container -->
       </div><!-- /.jumbotron -->
 

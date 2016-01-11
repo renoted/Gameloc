@@ -1,0 +1,17 @@
+body {
+	padding: 0;
+}
+
+.container {
+	text-align: center;
+}
+
+.linkBtn:link, .linkBtn:visited, .linkBtn:hover, .linkBtn:active {
+	text-decoration: none;
+	color: white;
+}
+
+#container-btn {
+	margin-top: 25%;
+}
+
