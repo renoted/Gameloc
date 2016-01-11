@@ -40,7 +40,7 @@
             <p>(PC, Xbox, PS4)</p>
             <div id="container-btn">
               <button type="button" class="btn btn-success btn-index"><a class="linkBtn" href="register.php">Inscription</a></button>
-              <button type="button" class="btn btn-primary btn-index"><a class="linkBtn" href="register.php">Connexion</a></button>
+              <button type="button" class="btn btn-primary btn-index"><a class="linkBtn" href="login.php">Connexion</a></button>
             </div>
           </div><!-- /.container -->
       </div><!-- /.jumbotron -->
