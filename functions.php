@@ -6,7 +6,7 @@
 		- Sinon renvoi le message d'erreur adéquat.
 	*/
 	function check_email_format($email) {
-		if(!isset($email)){
+		if(empty($email)){
 			return "Le champ \"Email\" doit être rempli."; 
 		} else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
 			return "Le format de l'email est incorrecte.";
@@ -23,11 +23,11 @@
 	*/
 	function check_password_format($password, $confirmPassword) {
 		/* 1 Contrôle du champ mot de passe*/
-		if(!isset($password)){
+		if(empty($password)){
 			return "Le champ \"Mot de passe\" doit être rempli.";
 		}
 		/* 2 Contrôle du champ confirmation*/
-		else if(!isset($confirmPassword)){
+		else if(empty($confirmPassword)){
 			return "Le champ \"Confirmer le mot de passe\" doit être rempli.";
 		}
 		/* 3 Contrôle de l'égalité */
@@ -35,7 +35,7 @@
 			return "Les mots de passe saisis sont différents.";
 		} 
 		/* 4 Contrôle de la taille du mot de passe*/
-		else if ($password < 6) {
+		else if (strlen($password) < 6) {
 			return "Le mot de passe choisi doit contenir au moins 6 caractères.";
 		}
 		/* 5 Contrôle du format du mot de passe*/
@@ -52,6 +52,14 @@
 		}
 
 		return "";
+	}
+
+	function check_contains_caracters_only($str){
+		if(empty($str)){
+			return "Ce champ doit être rempli.";
+		} else if(!preg_match('/[a-zA-Z]{2,}/', $str)){
+			return "Le champ ne doit contenir que des lettres.";
+		}
 	}
 
 ?>
