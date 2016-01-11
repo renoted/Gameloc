@@ -30,7 +30,7 @@
     <body>
 
       <div class="jumbotron">
-        <div class="container">
+        <div id="divContainer" class="container">
           <img src="public/img/Steam-01-128.png" alt="logo de Gameloc">
           <h1>Gameloc</h1>
           <p>Bienvenue dans la plus grande communauté de gamers sur Paris</p>

@@ -1,8 +1,10 @@
+
+
 body {
 	padding: 0;
 }
 
-.container {
+#divContainer {
 	text-align: center;
 }
 
@@ -11,6 +13,7 @@ body {
 	color: white;
 }
 
+/* CSS concernant index.php */
 #container-btn {
 	margin-top: 25%;
 }
@@ -21,4 +24,18 @@ body {
 		width: 50%;
 	}
 
+
 }
+
+
+/* CSS concernant catalogue.php */
+#divForm {
+	padding: 10%;
+	padding-right: 10%;
+	margin-left: 10%;
+	margin-right: 10%;
+	background-color: ffffff;
+	
+}
+
+	
