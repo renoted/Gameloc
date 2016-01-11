@@ -3,6 +3,7 @@
 	session_start();
 
 	require(__DIR__."/config/db.php");
+	require(__DIR__."/functions.php");
 
 	/*Récupération des données du formulaire*/
 	if(isset($_POST["submitBtn"])){
@@ -22,44 +23,16 @@
 		/*Contrôle de la validité des données*/
 
 		/*1. Contrôle du champ "Email" */
-
-		if(!isset($email)){
-			$errors["email"] = "Le champ \"Email\" doit être rempli."; 
-		} else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-			$errors["email"] = "Le format de l'email est incorrecte.";
-		} else if(strlen("email") > 60) {
-			$errors["email"] = "La taille de l'email doit être inférieure à 60 caractères.";
+		$checkEmailMessage = check_email_format($email);
+		if($checkEmailMessage !== ""){
+			$errors["email"] = $checkEmailMessage; 
 		}
 
 		/*2. Contrôle du champ "Mot de passe" */
 
-		/* 2.1 Contrôle du champ mot de passe*/
-		if(!isset($password)){
-			$errors["password"] = "Le champ \"Mot de passe\" doit être rempli.";
-		}
-		/* 2.2 Contrôle du champ confirmation*/
-		else if(!isset($confirmPassword)){
-			$errors["confirmPassword"] = "Le champ \"Confirmer le mot de passe\" doit être rempli.";
-		}
-		/* 2.3 Contrôle de l'égalité */
-		else if($password !== $confirmPassword){
-			$errors["confirmPassword"] = "Les mots de passe saisis sont différents.";
-		} 
-		/* 2.4 Contrôle de la taille du mot de passe*/
-		else if ($password < 6) {
-			$errors["password"] = "Le mot de passe choisi doit contenir au moins 6 caractères.";
-		}
-		/* 2.5 Contrôle du format du mot de passe*/
-		else {
-			// Le password contient au moins une lettre ?
-			$containsLetter = preg_match('/[a-zA-Z]/', $password);
-			// Le password contient au moins un chiffre ?
-			$containsDigit  = preg_match('/\d/', $password);
-			// Le password contient au moins un autre caractère ?
-			$containsSpecial= preg_match('/[^a-zA-Z\d]/', $password);
-			if(!$containsLetter || !$containsDigit || !$containsSpecial) {
-				$errors['password'] = "Lemot de passe doit contenir au moins une lettre, un nombre et un caractère spécial.";
-			}
+		$checkPasswordMessage = check_password_format($password, $confirmPassword);
+		if($checkPasswordMessage !== ""){
+			$errors["password"] = $checkPasswordMessage;
 		}
 
 		/*3. Contrôle du champ "Nom" */
