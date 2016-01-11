@@ -1,4 +1,4 @@
-<center><img src="img/logoGameloc.png" alt="logo de Gameloc"/></center>
+<center><img src="public/img/logoGameloc.png" alt="logo de Gameloc"/></center>
 <h2>Gameloc</h2>
 
 <!--
