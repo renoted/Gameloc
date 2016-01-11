@@ -1,12 +1,9 @@
 <?php
 
-  session_start();
-
-  require(__DIR__."/config/db.php");
   require(__DIR__."/functions.php");
   $page = "Connexion";
 
-  /*Récupération des données du formulaire*/
+  /*Récupération et traitement pour la sécurité des données du formulaire*/
   if(isset($_POST["submitBtn"])){
     $email = trim(htmlentities($_POST["email"]));
     $password = trim(htmlentities($_POST["password"]));
@@ -14,20 +11,14 @@
     /*Instanciation du tableau d'erreurs*/
     $errors = [];
 
-    /*1. Contrôle du champ "Email" pour la sécurité */ 
-    $checkEmailMessage = check_email_format($email);
-    if($checkEmailMessage !== ""){
-      $errors["email"] = $checkEmailMessage; 
+    
+    /*1. Contrôle du champ "Mot de passe" nonvide */
+    // $checkPasswordMessage = check_password_format($password);
+    if($password !== ""){
+      $errors["password"] = "Mot de passe vide.";
     }
 
-    /*2. Contrôle du champ "Mot de passe" pour la sécurité */
-
-    $checkPasswordMessage = check_password_format($password, $confirmPassword);
-    if($checkPasswordMessage !== ""){
-      $errors["password"] = $checkPasswordMessage;
-    }
-
-     /*3. Recherche correspondance email/password dans la table users de la bdd */
+     /*2. Recherche correspondance email/password dans la table users de la bdd */
     $query = $pdo->prepare('SELECT * FROM users WHERE email = :email');
     $query->bindValue(':email', $email, PDO::PARAM_STR);
     $query->execute();
@@ -48,54 +39,21 @@
         header("Location: profile.php");
         die();
       }
+
       else {
-        $errors['password'] = "Wrong password.";
+        $errors['password'] = "1.Utilisateur/mot de passe inconnu/s.";
       }
     }
-    else {
-      $errors['user'] = "User with email not found.";
-    }
 
-    $_SESSION['loginErrors'] = $errors;
-    
-    header("Location: index.php");
-    die();
+    else {
+      $errors['user'] = "2.Utilisateur/mot de passe inconnu/s.";
+    }
   }
 
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link rel="icon" href="public/img/logoGameloc.ico">
-
-  <title>Login</title>
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-  <!-- Custom styles for this template -->
-  <link href="public/css/vendor/starter-template.css" rel="stylesheet">
-
-  <link rel="stylesheet" href="public/css/main.css">
-
-
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-      <![endif]-->
-    </head>
-
-    <body>
-
+<!-- Affichage header.php puis page Login -->
       <div class="jumbotron">
           <div class="container">
             <?php
@@ -108,6 +66,7 @@
       <!-- Copié de bootstrap : http://getbootstrap.com/css/#forms -->
 
       <div class="container">
+
         <form method="POST" action="#">
           <div class="form-group">
                   <label for="email">Adresse électronique</label>

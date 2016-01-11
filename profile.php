@@ -1,12 +1,12 @@
 <?php
 	session_start();
-	require(__DIR__."/config/db.php");
 	require(__DIR__.'/functions.php');
 
-	checkLoggedIn();
+	// checkLoggedIn();
 
 	$page = "Bienvenue";
-
+	// TODO pour récupérer le prénom de l'utilisateur
+	print_r($_SESSION);
 	/*
 	// Je check que l'utilisateur est bien loggué sinon je redirige vers index.php
 	if(empty($_SESSION['user'])) {
@@ -32,7 +32,8 @@
 					<?php if(isset($_SESSION['user'])): ?>
 					<?php pr($_SESSION['user']); ?>
 					<?php endif; ?>
-					<p>Bienvenue <?php echo $_SESSION['user']['email']; ?></p>
+					<!-- TODO passer le nom de l'user pour la bienvenue -->
+					<p>Bienvenue     </p>
 					<p>Cette page est accessible que pour les nouveaux utilisateurs ou 
 					les utilisateurs connectés</p>
 		</div>
