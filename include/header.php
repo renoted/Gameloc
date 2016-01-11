@@ -31,7 +31,7 @@
 
 	<div class="jumbotron">
 	          <div id="divJumboHeader" class="container">
-	            <img src="public/img/logoGameloc.png" alt="logo de Gameloc"/>
+	            <a href="index.php"> <img src="public/img/logoGameloc.png" alt="logo de Gameloc"/></a>
 	            <h1>Gameloc</h1>  
 	  			<p><?php echo $page; ?></p>
 	          </div><!-- /.container -->

@@ -82,7 +82,7 @@
 			$query = $pdo->prepare("INSERT INTO `users`(`email`, `password`, `lastname`, `firstname`, `address`, `zipcode`, `town`, `phone`) 
 									VALUES (:email, :password, :lname, :fname, :address, :zipcode, :town, :phone);");
 			$query->bindValue(":email", $email, PDO::PARAM_STR);
-			$query->bindValue(":password", $password, PDO::PARAM_STR);
+			$query->bindValue(":password", $hashedPassword, PDO::PARAM_STR);
 			$query->bindValue(":lname", $lname, PDO::PARAM_STR);
 			$query->bindValue(":fname", $fname, PDO::PARAM_STR);
 			$query->bindValue(":address", $address, PDO::PARAM_STR);
@@ -114,7 +114,7 @@
 		<!-- Header -->
 		<?php require(__DIR__."/include/header.php") ?>
 		<div class="container">
-			<form method="post" action="#">
+			<form method="post" action=<?php echo $_SERVER["PHP_SELF"] ?>>
 				<div class="form-group">
 					<label for="email">Email</label>
 					<input type="email" class="form-control" id="email" placeholder="email" name="email"  value="<?php if(isset($email)) echo $email ?>">
