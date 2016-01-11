@@ -54,11 +54,36 @@
 		return "";
 	}
 
-	function check_contains_caracters_only($str){
+	/*
+		Fonction qui vérifie qu'une chaîne passée en paramètre une chaîne.
+		- Si la chaîne est vide ou ne contient pas que des caractères, revoi le message d'erreur adéquat
+		- Sinon revoi un chaîne vide
+	*/
+	function check_contains_characters_only($str){
 		if(empty($str)){
 			return "Ce champ doit être rempli.";
-		} else if(!preg_match('/[a-zA-Z]{2,}/', $str)){
+		} else if(preg_match('/[^a-zA-Z]/', $str)){
 			return "Le champ ne doit contenir que des lettres.";
+		} else {
+			return "";
+		}
+	}
+
+	/*
+		Fonction qui vérifie si un code postal est correctement formaté
+
+		TODO: La fonction ne fonctionne pas correctement :
+		- 7740A --> Ne devrait pas être valide
+	*/
+	function check_zipcode_format($zipcode){
+		if(empty($zipcode)){
+			return "Ce champ doit être rempli.";
+		} else if(!preg_match('[^\d]', $zipcode)){
+			return "Le champ ne doit contenir que des chiffres.";
+		} else if(strlen($zipcode) !== 5){
+			return "Le champ ne doit contenir que 5 chiffres";
+		} else {
+			return "";
 		}
 	}
 

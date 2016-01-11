@@ -37,29 +37,38 @@
 
 		/*3. Contrôle du champ "Nom" */
 
-		$checkLnameMessage = check_contains_caracters_only($lname);
+		$checkLnameMessage = check_contains_characters_only($lname);
 		if($checkLnameMessage !== ""){
 			$errors["lname"] = $checkLnameMessage;
 		}
 
 		/*4. Contrôle du champ "Prénom" */
 
-		$checkFnameMessage = check_contains_caracters_only($fname);
+		$checkFnameMessage = check_contains_characters_only($fname);
 		if($checkFnameMessage !== ""){
 			$errors["fname"] = $checkFnameMessage;
 		}
 		/*5. Contrôle du champ "Adresse" */
-
+		if(empty($address)){
+			$errors["address"] = "Ce champ doit être rempli.";
+		}
 		/*6. Contrôle du champ "Code postal" */
+
+		$checkZipcodeMessage = check_zipcode_format($zipcode);
+		if($checkZipcodeMessage !== ""){
+			$errors["zipcode"] = $checkZipcodeMessage;
+		}
 
 		/*7. Contrôle du champ "Ville" */
 
-		$checkTownMessage = check_contains_caracters_only($town);
+		$checkTownMessage = check_contains_characters_only($town);
 		if($checkTownMessage !== ""){
 			$errors["town"] = $checkTownMessage;
 		}
 		/*8. Contrôle du champ "Téléphone" */
 		
+
+
 		print_r($_POST);
 		print_r($errors);
 	}
@@ -77,7 +86,7 @@
 	</head>
 	<body>
 		<!-- Header -->
-		<?php //require(__DIR__."") ?>
+		<?php require(__DIR__."/include/header.php") ?>
 		<div class="container">
 			<form method="post" action="#">
 				<div class="form-group">
