@@ -35,18 +35,24 @@
         unset($resultUser['password']);
         $_SESSION['user'] = $resultUser;
 
-        // On redirige l'utilisateur vers la page protégée profile.php
-        header("Location: profile.php");
+        // On redirige l'utilisateur vers la page catalogue
+        // echo $password;
+        header("Location: catalog.php");
         die();
       }
 
       else {
-        $errors['password'] = "1.Utilisateur/mot de passe inconnu/s.";
+        // mauvais mot de passe
+        $errors['password'] = "1. Utilisateur/mot de passe inconnu/s.";
+        print_r($errors);
+       
       }
     }
 
     else {
-      $errors['user'] = "2.Utilisateur/mot de passe inconnu/s.";
+      $errors['user'] = "2. Utilisateur/mot de passe inconnu/s.";
+       $toto= print_error_message($errors, $error);
+       print_r($errors);
     }
   }
 
