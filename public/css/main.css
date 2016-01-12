@@ -38,4 +38,7 @@ body {
 	
 }
 
-	
+/* Carte google map de la page admin */
+#map { 
+	height: 100%;
+}
