@@ -196,7 +196,7 @@ function geocode($address){
 	if($responseArray["status"] === "OK"){
 		$lat = $responseArray["results"]["0"]["geometry"]["location"]["lat"];
 		$lng = $responseArray["results"]["0"]["geometry"]["location"]["lng"];
-
+		
 		if($lat && $lng){
 			$response["lat"] = $lat;
 			$response["lng"] = $lng;
