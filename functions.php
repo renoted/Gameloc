@@ -177,6 +177,7 @@ function geocode($address){
 	}
 
 	function get_user_datas($email){
+		global $pdo;
 		$query = $pdo->prepare("SELECT * FROM users WHERE email = :email");
 		$query->bindValue(":email", $email, PDO::PARAM_STR);
 		$query->execute();

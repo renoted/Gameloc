@@ -106,7 +106,7 @@
 			$_SESSION["user"] = $datas;
 
 			/*On envoi l'utilisateur vers la page catalogue*/
-			header("Location: catalogue.php");
+			header("Location: catalog.php");
 			 die();
 		}
 	}
