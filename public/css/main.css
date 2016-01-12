@@ -34,11 +34,22 @@ body {
 	padding-right: 10%;
 	margin-left: 10%;
 	margin-right: 10%;
-	background-color: ffffff;
+	background-color: #ffffff;
 	
 }
 
 /* Carte google map de la page admin */
 #map { 
+	height: 50%;
+	width: 50%;
+}
+
+html, body { 
 	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.adminPage {
+	padding-left: 20%; 
 }

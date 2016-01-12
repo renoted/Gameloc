@@ -16,47 +16,28 @@ if($_SESSION["user"]["role"] !== "admin"){
 }
 
 /*Compter le nombre d'utilisateur dans la bdd*/
-$query = $pdo->prepare("SELECT count(id) as total FROM `users`;");
+$query = $pdo->prepare("SELECT * FROM `users`;");
 $query->execute();
-$result = $query->fetch();
+$results = $query->fetchAll();
 
-$nbUsers = $result["total"];
-
+/*Compter le nombre d'utilisateurs*/
+$nbUsers = count($results);
 ?>
 
 <?php require(__DIR__."/include/header.php");?>
 
 <!-- Statistiques -->
-<div class="container">
-	<h2>Statistique</h2>
-	<p>Le site contient <?php echo $nbUsers; ?> utilisateur(s)</p>			
-</div>
+<h1>Statistique</h1>
+<p>Le site contient <?php echo $nbUsers; ?> utilisateur(s)</p>			
 <!-- Carte google map -->
+<h1>Localisation des utilisateurs</h1>
 <div id="map"></div>
+<!-- Derniers jeux ajoutés -->
+<h1>Les derniers jeux ajoutés par les nouveaux inscrits</h1>
+<!-- Ajouter les derniers jeux -->
 
-<script type="text/javascript">
 
-    var map;
-
-    var myLatLng = {lat: 48.8909964, lng: 2.2345892};
-
-    function initMap() {
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 48.8588376, lng: 2.2773461},
-        zoom: 12
-      });
-
-      var marker = new google.maps.Marker({
-        position: myLatLng,
-        map: map,
-        title: 'hello'
-      });
-    }
-
-    </script>
-
-    <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApFHyhOE1lniNGNo0yrkthO-wEUp4OOzM&callback=initMap">
-    </script>
+<script src="public/js/map.js" type="text/javascript" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApFHyhOE1lniNGNo0yrkthO-wEUp4OOzM&callback=initMap" async defer></script>
 </body>
 </html>
