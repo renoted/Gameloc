@@ -67,7 +67,7 @@
 		} else if(strlen("email") > 60) {
 			return "La taille de l'\"Adresse électronique\" doit être inférieure à 60 caractères.";
 		} else {
-		return "";		
+			return "";		
 		}
 	}
 
@@ -114,13 +114,14 @@
 		Sans vérifier le confirmPassword
 	*/
 	function check_password_format_conforme($password) {
+		$msg = "";
 		/* 1 Contrôle du champ mot de passe*/
 		if(empty($password)){
-			return "Le champ \"Mot de passe\" doit être rempli.";
+			$msg = "Le champ \"Mot de passe\" doit être rempli.";
 		}
 		/* 4 Contrôle de la taille du mot de passe*/
 		else if (strlen($password) < 6) {
-			return "Le mot de passe choisi doit contenir au moins 6 caractères.";
+			$msg = "Le mot de passe choisi doit contenir au moins 6 caractères.";
 		}
 		/* 5 Contrôle du format du mot de passe*/
 		else {
@@ -131,10 +132,10 @@
 			// Le password contient au moins un autre caractère ?
 			$containsSpecial= preg_match('/[^a-zA-Z\d]/', $password);
 			if(!$containsLetter || !$containsDigit || !$containsSpecial) {
-				return "Le mot de passe doit contenir au moins une lettre, un nombre et un caractère spécial.";
+				$msg = "Le mot de passe doit contenir au moins une lettre, un nombre et un caractère spécial.";
 			}
 		}
-		return "";
+		return $msg;
 	}
 
 

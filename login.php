@@ -12,6 +12,7 @@
     $email = trim(htmlentities($_POST["email"]));
     $password = trim(htmlentities($_POST["password"]));
   
+    /*Instanciation du db2_tables(connection)au d'erreurs*/
 
     /*1. Contrôle du champ "email" 
     $checkEmailMessage = check_email_format_conforme($email);
@@ -20,7 +21,7 @@
     }*/
 
     /*1. Contrôle du champ "email" */
-    $checkEmailMessage = check_email($email);
+    $checkEmailMessage = check_email_format_conforme($email);
     if($checkEmailMessage !== ""){
       $errors["email"] = $checkEmailMessage; 
     }
@@ -30,45 +31,42 @@
     /*2. Contrôle du champ "password" */
     $checkPasswordMessage = check_password_format_conforme($password);
     if($checkPasswordMessage !== ""){
-      $errors["email"] = $checkPasswordMessage; 
+      $errors["password"] = $checkPasswordMessage; 
     }
 
+    if(empty($errors)) {
+       /*3. Recherche correspondance email/password dans la table users de la bdd */
+      $query = $pdo->prepare('SELECT * FROM users WHERE email = :email');
+      $query->bindValue(':email', $email, PDO::PARAM_STR);
+      $query->execute();
+      $resultUser = $query->fetch();
 
-     /*3. Recherche correspondance email/password dans la table users de la bdd */
-    $query = $pdo->prepare('SELECT * FROM users WHERE email = :email');
-    $query->bindValue(':email', $email, PDO::PARAM_STR);
-    $query->execute();
-    $resultUser = $query->fetch();
+      // Si l'utilisateur a été trouvé
+      if($resultUser) {
+        // Compare un password en clair avec un password haché
+        // Attention, PHP 5.5 ou plus !!! - Sinon, depuis 5.3.7 : https://github.com/ircmaxell/password_compat
+        $isValidPassword = password_verify($password, $resultUser['password']);
 
-    // Si l'utilisateur a été trouvé
-    if($resultUser) {
-      // Compare un password en clair avec un password haché
-      // Attention, PHP 5.5 ou plus !!! - Sinon, depuis 5.3.7 : https://github.com/ircmaxell/password_compat
-      $isValidPassword = password_verify($password, $resultUser['password']);
+        if($isValidPassword) {
+          // On stocke le user en session après avoir retiré le password
+          unset($resultUser['password']);
+          $_SESSION['user'] = $resultUser;
 
-      if($isValidPassword) {
-        // On stocke le user en session après avoir retiré le password
-        unset($resultUser['password']);
-        $_SESSION['user'] = $resultUser;
+          // On redirige l'utilisateur vers la page protégée profile.php
+          header("Location: catalog.php");
+          die();
+        }
 
-        // On redirige l'utilisateur vers la page catalogue
-        // echo $password;
-        header("Location: catalog.php");
-        die();
+        else {
+          // Bon utilisateur/ mauvais mot de passe.
+          $errors['connexion'] = "mauvais utilisateur/mot de passe.";
+        }
       }
 
       else {
-        // Bon utilisateur/ mauvais mot de passe.
-        $errors['password'] = "mauvais utilisateur/mot de passe.";
-        // print_r($errors);
-       
+        // Utilisateur inconnu.
+        $errors['connexion'] = "mauvais utilisateur/mot de passe.";
       }
-    }
-
-    else {
-      // Utilisateur inconnu.
-      $errors['user'] = "mauvais utilisateur/mot de passe.";
-      // print_r($errors);
     }
   }
 
@@ -90,21 +88,22 @@
       <div class="container">
 
         <form method="POST" action="#">
-            
+
+            <?php print_error_message($errors, "connexion"); ?>
+
             <div class="form-group">
               <label for="email">Adresse électronique</label>
               <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+              <?php print_error_message($errors, "email"); ?>
             </div>
-            <?php print_error_message($errors, "email"); ?>
 
             <div class="form-group">
               <label for="password">Mot de passe</label>
               <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+              <?php print_error_message($errors, "password"); ?>
             </div>
-            <?php print_error_message($errors, "password"); ?>
             
             <button type="submit" name="submitBtn" class="btn btn-primary btn-index">Valider</button>
-
         </form>
 
       </div><!-- /.container
