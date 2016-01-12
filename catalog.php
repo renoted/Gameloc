@@ -1,6 +1,6 @@
 <?php
 
-	$page = "catalogue";
+	$page = "catalog";
 
 	// require(__DIR__.'/config/db.php');    appelé ds check_Logged_in();
 	require(__DIR__.'/functions.php');
