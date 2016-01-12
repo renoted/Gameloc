@@ -1,24 +1,40 @@
 <?php
 
+  session_start();
   require(__DIR__."/functions.php");
   $page = "Connexion";
+
+  /*Instanciation du tableau d'erreurs*/
+  $errors = [];
 
   /*Récupération et traitement pour la sécurité des données du formulaire*/
   if(isset($_POST["submitBtn"])){
     $email = trim(htmlentities($_POST["email"]));
     $password = trim(htmlentities($_POST["password"]));
   
-    /*Instanciation du tableau d'erreurs*/
-    $errors = [];
 
-    
-    /*1. Contrôle du champ "Mot de passe" nonvide */
-    // $checkPasswordMessage = check_password_format($password);
-    if($password !== ""){
-      $errors["password"] = "Mot de passe vide.";
+    /*1. Contrôle du champ "email" 
+    $checkEmailMessage = check_email_format_conforme($email);
+    if($checkEmailMessage !== ""){
+      $errors["email"] = $checkEmailMessage; 
+    }*/
+
+    /*1. Contrôle du champ "email" */
+    $checkEmailMessage = check_email($email);
+    if($checkEmailMessage !== ""){
+      $errors["email"] = $checkEmailMessage; 
     }
 
-     /*2. Recherche correspondance email/password dans la table users de la bdd */
+
+
+    /*2. Contrôle du champ "password" */
+    $checkPasswordMessage = check_password_format_conforme($password);
+    if($checkPasswordMessage !== ""){
+      $errors["email"] = $checkPasswordMessage; 
+    }
+
+
+     /*3. Recherche correspondance email/password dans la table users de la bdd */
     $query = $pdo->prepare('SELECT * FROM users WHERE email = :email');
     $query->bindValue(':email', $email, PDO::PARAM_STR);
     $query->execute();
@@ -31,7 +47,7 @@
       $isValidPassword = password_verify($password, $resultUser['password']);
 
       if($isValidPassword) {
-        // On stocke le user en session et on retire le password avant (pas très grave)
+        // On stocke le user en session après avoir retiré le password
         unset($resultUser['password']);
         $_SESSION['user'] = $resultUser;
 
@@ -42,17 +58,17 @@
       }
 
       else {
-        // mauvais mot de passe
-        $errors['password'] = "1. Utilisateur/mot de passe inconnu/s.";
-        print_r($errors);
+        // Bon utilisateur/ mauvais mot de passe.
+        $errors['password'] = "mauvais utilisateur/mot de passe.";
+        // print_r($errors);
        
       }
     }
 
     else {
-      $errors['user'] = "2. Utilisateur/mot de passe inconnu/s.";
-       $toto= print_error_message($errors, $error);
-       print_r($errors);
+      // Utilisateur inconnu.
+      $errors['user'] = "mauvais utilisateur/mot de passe.";
+      // print_r($errors);
     }
   }
 
@@ -74,19 +90,25 @@
       <div class="container">
 
         <form method="POST" action="#">
-          <div class="form-group">
-                  <label for="email">Adresse électronique</label>
-                  <input type="text" class="form-control" id="email" name="email" placeholder="Email">
-                </div>
+            
+            <div class="form-group">
+              <label for="email">Adresse électronique</label>
+              <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+            </div>
+            <?php print_error_message($errors, "email"); ?>
 
-                <div class="form-group">
-                  <label for="password">Mot de passe</label>
-                  <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                </div>
-              <button type="submit" name="submitBtn" class="btn btn-primary btn-index">Valider</button>
+            <div class="form-group">
+              <label for="password">Mot de passe</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            </div>
+            <?php print_error_message($errors, "password"); ?>
+            
+            <button type="submit" name="submitBtn" class="btn btn-primary btn-index">Valider</button>
+
         </form>
-      </div><!-- /.container
 
+      </div><!-- /.container
+ 
 
 
     <!-- Bootstrap core JavaScript

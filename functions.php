@@ -12,7 +12,7 @@
 		if(empty($email)){
 			return "Le champ \"Email\" doit être rempli."; 
 		} else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-			return "Le format de l'email est incorrecte.";
+			return "Le format de l'email est incorrect.";
 		} else if(strlen("email") > 60) {
 			return "La taille de l'email doit être inférieure à 60 caractères.";
 		} else {
@@ -25,6 +25,49 @@
 			} else {
 				return "";
 			}
+		}
+	}
+
+	/*
+		Fonction qui vérifie si l'email est présent dans la bdd.
+		retourne un message non informatif si non présent
+	*/
+	function check_email($email) {
+		global $pdo;
+		if(empty($email)){
+			return "Le champ \"Adresse électronique\" doit être rempli."; 
+		} else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+			return "Le format de l'\"Adresse électronique\" est incorrect.";
+		} else if(strlen("email") > 60) {
+			return "La taille de l'\"Adresse électronique\" doit être inférieure à 60 caractères.";
+		} else {
+			$query = $pdo->prepare("SELECT email FROM users  WHERE email = :email");
+			$query->bindValue(":email", $email, PDO::PARAM_STR);
+			$query->execute();
+			$result = $query->fetch();
+			if($result){
+				return "Cette adresse électronique et/ou ce mot de passe ne sont pas dans notre base.";
+			} else {
+				return "";
+			}
+		}
+	}
+
+	/*
+		Fonction qui vérifie si le format d'un email est valide ou non.
+		- Si valide, renvoie une chaîne vide ("").
+		- Sinon renvoie le message d'erreur adéquat
+		  sans révéler si l'email est dans la base ou non
+	*/
+	function check_email_format_conforme($email) {
+		if(empty($email)){
+			return "Le champ \"Adresse électronique\" doit être rempli."; 
+		} else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+			return "Le format de l'\"Adresse électronique\" est incorrect.";
+		} else if(strlen("email") > 60) {
+			return "La taille de l'\"Adresse électronique\" doit être inférieure à 60 caractères.";
+		} else {
+		return "";		
 		}
 	}
 
@@ -65,6 +108,35 @@
 
 		return "";
 	}
+
+/*
+		Même fonction de vérification du format du mot de passe.
+		Sans vérifier le confirmPassword
+	*/
+	function check_password_format_conforme($password) {
+		/* 1 Contrôle du champ mot de passe*/
+		if(empty($password)){
+			return "Le champ \"Mot de passe\" doit être rempli.";
+		}
+		/* 4 Contrôle de la taille du mot de passe*/
+		else if (strlen($password) < 6) {
+			return "Le mot de passe choisi doit contenir au moins 6 caractères.";
+		}
+		/* 5 Contrôle du format du mot de passe*/
+		else {
+			// Le password contient au moins une lettre ?
+			$containsLetter = preg_match('/[a-zA-Z]/', $password);
+			// Le password contient au moins un chiffre ?
+			$containsDigit  = preg_match('/\d/', $password);
+			// Le password contient au moins un autre caractère ?
+			$containsSpecial= preg_match('/[^a-zA-Z\d]/', $password);
+			if(!$containsLetter || !$containsDigit || !$containsSpecial) {
+				return "Le mot de passe doit contenir au moins une lettre, un nombre et un caractère spécial.";
+			}
+		}
+		return "";
+	}
+
 
 	/*
 		Fonction qui vérifie qu'une chaîne passée en paramètre une chaîne.
