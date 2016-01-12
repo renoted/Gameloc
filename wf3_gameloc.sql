@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 11 Janvier 2016 à 17:16
+-- Généré le :  Mar 12 Janvier 2016 à 11:38
 -- Version du serveur :  5.6.25
 -- Version de PHP :  5.6.11
 
@@ -78,13 +78,21 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(256) CHARACTER SET utf8 NOT NULL,
   `lastname` varchar(100) COLLATE utf16_unicode_ci NOT NULL,
   `firstname` varchar(100) COLLATE utf16_unicode_ci NOT NULL,
-  `adress` varchar(255) COLLATE utf16_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf16_unicode_ci NOT NULL,
   `zipcode` varchar(5) COLLATE utf16_unicode_ci NOT NULL,
   `town` varchar(50) COLLATE utf16_unicode_ci NOT NULL DEFAULT 'Paris',
   `phone` varchar(10) COLLATE utf16_unicode_ci NOT NULL,
   `latitude` decimal(10,8) DEFAULT NULL,
-  `longitude` decimal(11,8) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
+  `longitude` decimal(11,8) DEFAULT NULL,
+  `role` varchar(20) CHARACTER SET utf8 NOT NULL DEFAULT 'member'
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
+
+--
+-- Contenu de la table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `password`, `lastname`, `firstname`, `address`, `zipcode`, `town`, `phone`, `latitude`, `longitude`, `role`) VALUES
+(1, 'renaud.tedaldi@hotmail.fr', '$2y$10$IjnzxYNSm4RjTX4Rh9v6beyJxBgBwzZGEwK.O53K0lOytDB2u5V7q', 'ren', 'ted', 'rhqhh', '75001', 'paris', '0144444444', '48.86404930', '2.33105260', 'member');
 
 --
 -- Index pour les tables exportées
@@ -124,6 +132,11 @@ ALTER TABLE `games`
 --
 ALTER TABLE `plateforms`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT pour la table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- Contraintes pour les tables exportées
 --

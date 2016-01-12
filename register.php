@@ -78,9 +78,14 @@
 			/*On encode le mot de passe*/
 			$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
+			/*On récupère les coordonnées géographiques de l'utilisateur*/
+			$completeAddress = $address.", ".$zipcode." ".$town; //ex 1 rue des anges, 60400 Caisnes
+			$geocode_datas = geocode($completeAddress);
+			$lat = $geocode_datas["lat"];
+			$lng = $geocode_datas["lng"];
 			/*On prépare la requête d'insertion des données*/
-			$query = $pdo->prepare("INSERT INTO `users`(`email`, `password`, `lastname`, `firstname`, `address`, `zipcode`, `town`, `phone`) 
-									VALUES (:email, :password, :lname, :fname, :address, :zipcode, :town, :phone);");
+			$query = $pdo->prepare("INSERT INTO `users`(`email`, `password`, `lastname`, `firstname`, `address`, `zipcode`, `town`, `phone`, `latitude`, `longitude`) 
+									VALUES (:email, :password, :lname, :fname, :address, :zipcode, :town, :phone, :lat, :lng);");
 			$query->bindValue(":email", $email, PDO::PARAM_STR);
 			$query->bindValue(":password", $hashedPassword, PDO::PARAM_STR);
 			$query->bindValue(":lname", $lname, PDO::PARAM_STR);
@@ -89,13 +94,20 @@
 			$query->bindValue(":zipcode", $zipcode, PDO::PARAM_STR);
 			$query->bindValue(":town", $town, PDO::PARAM_STR);
 			$query->bindValue(":phone", $phone, PDO::PARAM_STR);
+			$query->bindValue(":lat", $lat, PDO::PARAM_STR);
+			$query->bindValue(":lng", $lng, PDO::PARAM_STR);
 
 			/*On exécute la requête*/
 			$query->execute();
 
+			/*On récupère les données de l'utilisateur pour les affecter à la super globale $_SESSION*/
+			$datas = get_user_datas($email);
+			unset($datas['password']);
+			$_SESSION["user"] = $datas;
+
 			/*On envoi l'utilisateur vers la page catalogue*/
-			header("Location: catalogue.php");
-			die();
+			header("Location: catalog.php");
+			 die();
 		}
 	}
 ?>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 11 Janvier 2016 à 10:41
+-- Généré le :  Mar 12 Janvier 2016 à 11:22
 -- Version du serveur :  5.6.25
 -- Version de PHP :  5.6.11
 
@@ -35,8 +35,18 @@ CREATE TABLE IF NOT EXISTS `users` (
   `address` varchar(255) COLLATE utf16_unicode_ci NOT NULL,
   `zipcode` varchar(5) COLLATE utf16_unicode_ci NOT NULL,
   `town` varchar(50) COLLATE utf16_unicode_ci NOT NULL DEFAULT 'Paris',
-  `phone` varchar(10) COLLATE utf16_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
+  `phone` varchar(10) COLLATE utf16_unicode_ci NOT NULL,
+  `latitude` decimal(10,8) NOT NULL,
+  `longitude` decimal(11,8) NOT NULL,
+  `role` varchar(20) COLLATE utf16_unicode_ci NOT NULL DEFAULT 'member'
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
+
+--
+-- Contenu de la table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `password`, `lastname`, `firstname`, `address`, `zipcode`, `town`, `phone`, `latitude`, `longitude`, `role`) VALUES
+(6, 'ducreuxr@gmail.com', '$2y$10$tm.pKQZavrDX2YMsyRlyw.xY7yk8rybleC7sPLGGp82vYeocI1yNi', 'Ducreux', 'Romain', '1 p de chaalis', '77400', 'Thorigny', '0666666666', '48.88413070', '2.70700950', 'member');
 
 --
 -- Index pour les tables exportées
@@ -49,6 +59,15 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
