@@ -84,9 +84,6 @@
 
 	/*
 		Fonction qui vérifie si un code postal est correctement formaté
-
-		TODO: La fonction ne fonctionne pas correctement :
-		- 7740A --> Ne devrait pas être valide
 	*/
 	function check_zipcode_format($zipcode){
 		if(empty($zipcode)){
@@ -100,9 +97,6 @@
 
 	/*
 		Fonction qui vérifie si un numéro de téléphone est correctement formaté
-
-		TODO: La fonction ne fonctionne pas correctement :
-		- 066666666A --> Ne devrait pas être valide
 	*/
 	function check_phone_nb_format($phoneNb){
 		if(empty($phoneNb)){
@@ -123,6 +117,63 @@
 		if(isset($errors[$error])){
 			echo "<div class=\"alert alert-danger\">{$errors[$error]}</div>";
 		}	
+	}
+
+	/*
+	Pour enregistrer en bdd :
+	* champs latitude : DECIMAL(10,8)
+	* champs longitude : DECIMAL(11,8) 
+*/
+
+function geocode($address){
+
+	// Url de l'api : https://maps.google.com/maps/api/geocode/json?address=
+
+	// Encodage de l'adresse (" " remplacés pas "%")
+	$address = urlencode($address);
+
+	// Url de l'api pour geocoder
+	$urlApi = "https://maps.google.com/maps/api/geocode/json?address=$address";
+
+	// Apple de l'Api gmap decode (en GET - reponse en JSON
+	$responseJson = file_get_contents($urlApi);
+
+	// Décodage du json pour le transformer en array php associatif
+	$responseArray = json_decode($responseJson, true);
+
+	// Tableau associatif retourné par la fonction
+	$response = [];
+
+	// On teste si le résultat est valide
+	if($responseArray["status"] === "OK"){
+		$lat = $responseArray["results"]["0"]["geometry"]["location"]["lat"];
+		$lng = $responseArray["results"]["0"]["geometry"]["location"]["lng"];
+
+		if($lat && $lng){
+			$response["lat"] = $lat;
+			$response["lng"] = $lng;
+		}
+	}
+
+	return $response;
+}
+
+	/*
+		Cett fonction vérifie que l'utilisateur qui tente d'accçder à cette page est bien connecté.
+		Si ce n'est pas le cas, il est renvoyé vers page d'accueil et on affecte à la variable globale
+		$_SESSION une clé "message" avec un message d'erreur à afficher sur la page d'accueil.
+	*/
+	function check_logged_in(){
+		if(!isset($_SESSION)) {
+			session_start();
+		}
+
+		if(empty($_SESSION['user'])) {
+			$_SESSION['message'] = "Vous devez vous connecter.";
+			
+			header("Location: index.php");
+			die();
+		}
 	}
 
 ?>
