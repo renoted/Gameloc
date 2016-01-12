@@ -2,9 +2,14 @@
 
 	$page = "catalogue";
 
+	// require(__DIR__.'/config/db.php');    appelé ds check_Logged_in();
+	require(__DIR__.'/functions.php');
+
+	check_Logged_in();
+
 
 ?>
-
+	<!-- On inclut le header ( <head> + début du <body> + jumbotron + logo) -->
   <?php include(__DIR__.'/include/header.php'); ?>
 
   	<div class="container-fluid">
