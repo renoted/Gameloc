@@ -3,13 +3,13 @@
   require(__DIR__."/functions.php");
   $page = "Connexion";
 
+  $errors = [];
   /*Récupération et traitement pour la sécurité des données du formulaire*/
   if(isset($_POST["submitBtn"])){
     $email = trim(htmlentities($_POST["email"]));
     $password = trim(htmlentities($_POST["password"]));
   
     /*Instanciation du tableau d'erreurs*/
-    $errors = [];
 
     
     /*1. Contrôle du champ "Mot de passe" nonvide */
@@ -36,17 +36,17 @@
         $_SESSION['user'] = $resultUser;
 
         // On redirige l'utilisateur vers la page protégée profile.php
-        header("Location: profile.php");
+        header("Location: catalog.php");
         die();
       }
 
       else {
-        $errors['password'] = "1.Utilisateur/mot de passe inconnu/s.";
+        $errors['message'] = "1.Utilisateur/mot de passe inconnu/s.";
       }
     }
 
     else {
-      $errors['user'] = "2.Utilisateur/mot de passe inconnu/s.";
+      $errors['message'] = "2.Utilisateur/mot de passe inconnu/s.";
     }
   }
 
@@ -77,6 +77,7 @@
                   <label for="password">Mot de passe</label>
                   <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                 </div>
+              <?php print_error_message($errors, "message"); ?>
               <button type="submit" name="submitBtn" class="btn btn-primary btn-index">Valider</button>
         </form>
       </div><!-- /.container

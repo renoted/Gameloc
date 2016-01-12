@@ -26,7 +26,7 @@ $nbUsers = count($results);
 
 <?php require(__DIR__."/include/header.php");?>
 
-<!-- Statistiques -->
+<!-- Statistiques --> 
 <h1>Statistique</h1>
 <p>Le site contient <?php echo $nbUsers; ?> utilisateur(s)</p>			
 <!-- Carte google map -->
