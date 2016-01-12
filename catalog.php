@@ -4,7 +4,7 @@ session_start();
 
 $page = "catalog";
 
-	// require(__DIR__.'/config/db.php');    appelé ds check_Logged_in();
+
 require(__DIR__.'/functions.php');
 
 check_Logged_in();
@@ -122,7 +122,9 @@ if(isset($_GET['action']))  {
 								<img src="<?php echo $game['url_img']; ?>" />
 								<h3><?php echo $game['name']; ?> 
 									<span>
-										<?php if($game['is_available'] == 1): echo ('<button type="button" class="btn btn-success btn-index"><a class="linkBtn" href="#">Louer</a></button>'); endif;?>
+										<?php if($game['is_available'] == 1): echo ('<button type="button" class="btn btn-success btn-index"><a class="linkBtn" href="#">Louer</a></button>');?>
+										<?php else: echo ('<button type="button" class="btn btn-danger disabled">Louer</button>'); ?>
+										<?php endif; ?>
 									</span>
 								</h3>
 								<p><?php echo $game['description']; ?></p>
