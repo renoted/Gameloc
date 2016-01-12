@@ -100,6 +100,11 @@
 			/*On exécute la requête*/
 			$query->execute();
 
+			/*On récupère les données de l'utilisateur pour les affecter à la super globale $_SESSION*/
+			$datas = get_user_datas($email);
+			unset($datas['password']);
+			$_SESSION["user"] = $datas;
+
 			/*On envoi l'utilisateur vers la page catalogue*/
 			header("Location: catalogue.php");
 			 die();
