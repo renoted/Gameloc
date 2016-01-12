@@ -29,31 +29,6 @@
 	}
 
 	/*
-		Fonction qui vérifie si l'email est présent dans la bdd.
-		retourne un message non informatif si non présent
-	*/
-	function check_email($email) {
-		global $pdo;
-		if(empty($email)){
-			return "Le champ \"Adresse électronique\" doit être rempli."; 
-		} else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-			return "Le format de l'\"Adresse électronique\" est incorrect.";
-		} else if(strlen("email") > 60) {
-			return "La taille de l'\"Adresse électronique\" doit être inférieure à 60 caractères.";
-		} else {
-			$query = $pdo->prepare("SELECT email FROM users  WHERE email = :email");
-			$query->bindValue(":email", $email, PDO::PARAM_STR);
-			$query->execute();
-			$result = $query->fetch();
-			if($result){
-				return "Cette adresse électronique et/ou ce mot de passe ne sont pas dans notre base.";
-			} else {
-				return "";
-			}
-		}
-	}
-
-	/*
 		Fonction qui vérifie si le format d'un email est valide ou non.
 		- Si valide, renvoie une chaîne vide ("").
 		- Sinon renvoie le message d'erreur adéquat
