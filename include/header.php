@@ -27,6 +27,8 @@
       <![endif]-->
   
   </head>
+	
+  <!-- <?php require("nav.php");?> -->
 
   <body>
 
