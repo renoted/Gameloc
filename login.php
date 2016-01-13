@@ -1,52 +1,72 @@
 <?php
+
   session_start();
   require(__DIR__."/functions.php");
   $page = "Connexion";
 
+  /*Instanciation du tableau d'erreurs*/
   $errors = [];
+
   /*Récupération et traitement pour la sécurité des données du formulaire*/
   if(isset($_POST["submitBtn"])){
     $email = trim(htmlentities($_POST["email"]));
     $password = trim(htmlentities($_POST["password"]));
   
-    /*Instanciation du tableau d'erreurs*/
+    /*Instanciation du db2_tables(connection)au d'erreurs*/
 
-    
-    /*1. Contrôle du champ "Mot de passe" nonvide */
-    // $checkPasswordMessage = check_password_format($password);
-    if($password !== ""){
-      $errors["password"] = "Mot de passe vide.";
+    /*1. Contrôle du champ "email" 
+    $checkEmailMessage = check_email_format_conforme($email);
+    if($checkEmailMessage !== ""){
+      $errors["email"] = $checkEmailMessage; 
+    }*/
+
+    /*1. Contrôle du champ "email" */
+    $checkEmailMessage = check_email_format_conforme($email);
+    if($checkEmailMessage !== ""){
+      $errors["email"] = $checkEmailMessage; 
     }
 
-     /*2. Recherche correspondance email/password dans la table users de la bdd */
-    $query = $pdo->prepare('SELECT * FROM users WHERE email = :email');
-    $query->bindValue(':email', $email, PDO::PARAM_STR);
-    $query->execute();
-    $resultUser = $query->fetch();
 
-    // Si l'utilisateur a été trouvé
-    if($resultUser) {
-      // Compare un password en clair avec un password haché
-      // Attention, PHP 5.5 ou plus !!! - Sinon, depuis 5.3.7 : https://github.com/ircmaxell/password_compat
-      $isValidPassword = password_verify($password, $resultUser['password']);
 
-      if($isValidPassword) {
-        // On stocke le user en session et on retire le password avant (pas très grave)
-        unset($resultUser['password']);
-        $_SESSION['user'] = $resultUser;
+    /*2. Contrôle du champ "password" */
+    $checkPasswordMessage = check_password_format_conforme($password);
+    if($checkPasswordMessage !== ""){
+      $errors["password"] = $checkPasswordMessage; 
+    }
 
-        // On redirige l'utilisateur vers la page protégée profile.php
-        header("Location: catalog.php");
-        die();
+    if(empty($errors)) {
+       /*3. Recherche correspondance email/password dans la table users de la bdd */
+      $query = $pdo->prepare('SELECT * FROM users WHERE email = :email');
+      $query->bindValue(':email', $email, PDO::PARAM_STR);
+      $query->execute();
+      $resultUser = $query->fetch();
+
+      // Si l'utilisateur a été trouvé
+      if($resultUser) {
+        // Compare un password en clair avec un password haché
+        // Attention, PHP 5.5 ou plus !!! - Sinon, depuis 5.3.7 : https://github.com/ircmaxell/password_compat
+        $isValidPassword = password_verify($password, $resultUser['password']);
+
+        if($isValidPassword) {
+          // On stocke le user en session après avoir retiré le password
+          unset($resultUser['password']);
+          $_SESSION['user'] = $resultUser;
+
+          // On redirige l'utilisateur vers la page protégée profile.php
+          header("Location: catalog.php");
+          die();
+        }
+
+        else {
+          // Bon utilisateur/ mauvais mot de passe.
+          $errors['connexion'] = "mauvais utilisateur/mot de passe.";
+        }
       }
 
       else {
-        $errors['message'] = "1.Utilisateur/mot de passe inconnu/s.";
+        // Utilisateur inconnu.
+        $errors['connexion'] = "mauvais utilisateur/mot de passe.";
       }
-    }
-
-    else {
-      $errors['message'] = "2.Utilisateur/mot de passe inconnu/s.";
     }
   }
 
@@ -68,20 +88,26 @@
       <div class="container">
 
         <form method="POST" action="#">
-          <div class="form-group">
-                  <label for="email">Adresse électronique</label>
-                  <input type="text" class="form-control" id="email" name="email" placeholder="Email">
-                </div>
 
-                <div class="form-group">
-                  <label for="password">Mot de passe</label>
-                  <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                </div>
-              <?php print_error_message($errors, "message"); ?>
-              <button type="submit" name="submitBtn" class="btn btn-primary btn-index">Valider</button>
+            <?php print_error_message($errors, "connexion"); ?>
+
+            <div class="form-group">
+              <label for="email">Adresse électronique</label>
+              <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+              <?php print_error_message($errors, "email"); ?>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Mot de passe</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+              <?php print_error_message($errors, "password"); ?>
+            </div>
+            
+            <button type="submit" name="submitBtn" class="btn btn-primary btn-index">Valider</button>
         </form>
-      </div><!-- /.container
 
+      </div><!-- /.container
+ 
 
 
     <!-- Bootstrap core JavaScript
