@@ -121,7 +121,7 @@
 		$message = "";
 		if(empty($str)){
 			$message =  "Ce champ doit être rempli.";
-		} else if(preg_match('/[^a-zA-Z]/', $str)){
+		} else if(preg_match('/[^a-zA-Z\s]/', $str)){
 			$message =  "Le champ ne doit contenir que des lettres.";
 		} 
 		return $message;
@@ -147,7 +147,7 @@
 		$message = "";
 		if(empty($phoneNb)){
 			$message = "Ce champ doit être rempli.";
-		} else if(!ctype_digit($phoneNb) || strlen($phoneNb) !== 10){
+		} else if(!preg_match_all('/^0[1-9][0-9]{8}$/', $phoneNb)){
 			$message = "Le numéro saisi n'est pas valide, il doit contenir 10 chiffres (ex: 0123456789).";
 		}
 		return $message;

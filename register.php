@@ -105,6 +105,7 @@
 			unset($datas['password']);
 			$_SESSION["user"] = $datas;
 
+			
 			/*On envoi l'utilisateur vers la page catalogue*/
 			header("Location: catalog.php");
 			 die();
@@ -128,54 +129,54 @@
 		<div class="container">
 			<form method="post" action=<?php echo $_SERVER["PHP_SELF"] ?>>
 				<div class="form-group">
-					<label for="email">Email</label>
+					<label for="email">Email *</label>
 					<input type="email" class="form-control" id="email" placeholder="email" name="email"  value="<?php if(isset($email)) echo $email ?>">
 				</div>
 				<?php print_error_message($errors, "email"); ?>
 				
 				<div class="form-group">
-					<label for="password">Mot de passe</label>
+					<label for="password">Mot de passe *</label>
 					<input type="password" class="form-control" id="password" placeholder="password" name="password">
 				</div>
 				<?php print_error_message($errors, "password"); ?>
 
 				<div class="form-group">
-					<label for="confirmPassword">Confirmer mot de passe</label>
+					<label for="confirmPassword">Confirmer mot de passe *</label>
 					<input type="password" class="form-control" id="confirmPassword" placeholder="confirm password" name="confirmPassword">
 				</div>
 
 				<div class="form-group">
-					<label for="lname">Nom</label>
+					<label for="lname">Nom *</label>
 					<input type="text" class="form-control" id="lname" placeholder="lastname" name="lname" value="<?php if(isset($lname)) echo $lname ?>">
 				</div>
 				<?php print_error_message($errors, "lname"); ?>
 
 				<div class="form-group">
-					<label for="fname">Prénom</label>
+					<label for="fname">Prénom *</label>
 					<input type="text" class="form-control" id="fname" placeholder="firstname" name="fname" value="<?php if(isset($fname)) echo $fname ?>">
 				</div>
 				<?php print_error_message($errors, "fname"); ?>
 
 				<div class="form-group">
-					<label for="address">Adresse</label>
+					<label for="address">Adresse *</label>
 					<input type="text" class="form-control" id="address" placeholder="address" name="address" value="<?php if(isset($address)) echo $address ?>">
 				</div>
 				<?php print_error_message($errors, "address"); ?>
 
 				<div class="form-group">
-					<label for="zipcode">Code postale</label>
+					<label for="zipcode">Code postale *</label>
 					<input type="text" class="form-control" id="zipcode" placeholder="zipcode" name="zipcode" value="<?php if(isset($zipcode)) echo $zipcode ?>">
 				</div>
 				<?php print_error_message($errors, "zipcode"); ?>
 
 				<div class="form-group">
-					<label for="town">Ville</label>
+					<label for="town">Ville *</label>
 					<input type="text" class="form-control" id="town" placeholder="town" name="town" value="<?php if(isset($town)) echo $town ?>">
 				</div>
 				<?php print_error_message($errors, "town"); ?>
 
 				<div class="form-group">
-					<label for="phone">Téléphone</label>
+					<label for="phone">Téléphone *</label>
 					<input type="phone" class="form-control" id="phone" placeholder="phone" name="phone" value="<?php if(isset($phone)) echo $phone ?>">
 				</div>
 				<?php print_error_message($errors, "phone"); ?>
@@ -183,5 +184,4 @@
 				<button type="submit" class="btn btn-primary" name="submitBtn">Valider</button>
 			</form>
 		</div>
-	</body>
-</html>
+<?php require(__DIR__."/include/footer.php");

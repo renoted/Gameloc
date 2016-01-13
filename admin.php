@@ -39,5 +39,5 @@ $nbUsers = count($results);
 
 <script src="public/js/map.js" type="text/javascript" async defer></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApFHyhOE1lniNGNo0yrkthO-wEUp4OOzM&callback=initMap" async defer></script>
-</body>
-</html>
+
+<?php require(__DIR__."/include/footer.php");?>
