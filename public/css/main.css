@@ -53,3 +53,8 @@ html, body {
 .adminPage {
 	padding-left: 20%; 
 }
+
+#containerImg {
+	width: 100%;
+	padding :10%;
+}
