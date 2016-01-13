@@ -13,12 +13,6 @@ $page = "Ajouter un jeu";
 <?php require(__DIR__."/include/header.php");?>
 
 <!-- 
-Description
-
-
-Textarea
-
-
 Temps de jeux
 
 
@@ -49,7 +43,7 @@ Selectbox
 		<div>
 			<label for="published">Description</label>
 			<textarea id="description" placeholder="Description" name="description" value="<?php if(isset($description)) echo $published ?>"></textarea>
-			</div>
+		</div>
 
 		<button type="submit" class="btn btn-primary" name="submitBtn">Valider</button>
 	</form>	
