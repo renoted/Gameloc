@@ -28,7 +28,7 @@
   
   </head>
 	
-  <!-- <?php require("nav.php");?> -->
+  <?php require("nav.php"); ?>
 
   <body>
 

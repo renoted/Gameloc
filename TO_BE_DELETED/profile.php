@@ -32,7 +32,9 @@
 		<div class="container">
 					<!-- TODO passer le nom de l'user pour la bienvenue -->
 					<p>Bienvenue  <?php echo $userConnecte; ?>   </p>
-					<p>Voici ton profil. Veux-tu nous en dire plus ?</p>
+					<p>Cette page est accessible que pour les nouveaux utilisateurs ou 
+					les utilisateurs connectés</p>
 		</div>
-<?php require(__DIR__."/include/footer.php");?>
+	</body>
+</html>
 
