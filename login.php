@@ -105,7 +105,7 @@
             
             <button type="submit" name="submitBtn" class="btn btn-primary btn-index">Valider</button>
         </form>
-
+        <a href="forgotPassword.php">Mot de passe oublié ?</a>
       </div><!-- /.container
  
 
