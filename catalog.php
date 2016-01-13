@@ -115,25 +115,29 @@ if(isset($_GET['action']))  {
 
 		<!-- Bloc d'affichage des jeux vidéos -->
 		<div class="col-md-9">	
+			<div class="container-fluid">
+				<div class="row">
 
-			<!-- Affiche la liste des jeux avec foreach -->
+					<!-- Affiche la liste des jeux avec foreach -->
 						<?php if(!empty($results)): ?>
 							<?php foreach ($results as $keyGame => $game): ?>
-								<img src="<?php echo $game['url_img']; ?>" />
-								<h3><?php echo $game['name']; ?> 
-									<span>
-										<?php if($game['is_available'] == 1): echo ('<button type="button" class="btn btn-success btn-index"><a class="linkBtn" href="#">Louer</a></button>');?>
-										<?php else: echo ('<button type="button" class="btn btn-danger disabled">Louer</button>'); ?>
-										<?php endif; ?>
-									</span>
-								</h3>
-								<p><?php echo $game['description']; ?></p>
-								<br />
-								<hr />
+								<div class="col-md-3">
+									<img src="<?php echo $game['url_img']; ?>" />
+									<h3><?php echo $game['name']; ?> 
+										<span>
+											<?php if($game['is_available'] == 1): echo ('<button type="button" class="btn btn-success btn-index"><a class="linkBtn" href="#">Louer</a></button>');?>
+											<?php else: echo ('<button type="button" class="btn btn-danger disabled">Louer</button>'); ?>
+											<?php endif; ?>
+										</span>
+									</h3>
+									<p><?php echo $game['description']; ?></p>
+								</div>
 							<?php endforeach; ?>
 						<?php else: ?>
 							<h5>Désolé, aucun jeux ne correspond à votre recherche ...</h5>
 						<?php endif; ?>
+				</div>
+			</div>
 		</div>
 
 	</div>
