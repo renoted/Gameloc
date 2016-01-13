@@ -105,6 +105,7 @@
 			unset($datas['password']);
 			$_SESSION["user"] = $datas;
 
+			
 			/*On envoi l'utilisateur vers la page catalogue*/
 			header("Location: catalog.php");
 			 die();
