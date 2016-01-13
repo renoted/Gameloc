@@ -121,7 +121,7 @@
 		$message = "";
 		if(empty($str)){
 			$message =  "Ce champ doit être rempli.";
-		} else if(preg_match('/[^a-zA-Z]/', $str)){
+		} else if(preg_match('/[^a-zA-Z\s]/', $str)){
 			$message =  "Le champ ne doit contenir que des lettres.";
 		} 
 		return $message;
