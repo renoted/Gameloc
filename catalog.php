@@ -134,7 +134,7 @@ if(isset($_GET['action']))  {
 								</div>
 							<?php endforeach; ?>
 						<?php else: ?>
-							<h5>Désolé, aucun jeux ne correspond à votre recherche ...</h5>
+							<h5>Désolé, aucun jeu ne correspond à votre recherche ...</h5>
 						<?php endif; ?>
 				</div>
 			</div>

@@ -6,7 +6,8 @@
 
 	$page = "Bienvenue";
 	// TODO pour récupérer le prénom de l'utilisateur
-	print_r($_SESSION);
+	$userConnecte = $_SESSION['user']['firstname'];
+	
 	/*
 	// Je check que l'utilisateur est bien loggué sinon je redirige vers index.php
 	if(empty($_SESSION['user'])) {
@@ -29,11 +30,8 @@
 		<?php include('/include/header.php'); ?>
 
 		<div class="container">
-					<?php if(isset($_SESSION['user'])): ?>
-					<?php pr($_SESSION['user']); ?>
-					<?php endif; ?>
 					<!-- TODO passer le nom de l'user pour la bienvenue -->
-					<p>Bienvenue     </p>
+					<p>Bienvenue  <?php echo $userConnecte; ?>   </p>
 					<p>Cette page est accessible que pour les nouveaux utilisateurs ou 
 					les utilisateurs connectés</p>
 		</div>
