@@ -35,6 +35,5 @@
 					<p>Cette page est accessible que pour les nouveaux utilisateurs ou 
 					les utilisateurs connectés</p>
 		</div>
-	</body>
-</html>
+<?php require(__DIR__."/include/footer.php");?>
 
