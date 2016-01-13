@@ -101,5 +101,4 @@ if(isset($_POST["submitBtn"])){
 	</form>	
 </div>
 
-</body>
-</html>
+<?php require(__DIR__."/include/footer.php");?>

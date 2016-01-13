@@ -183,5 +183,4 @@
 				<button type="submit" class="btn btn-primary" name="submitBtn">Valider</button>
 			</form>
 		</div>
-	</body>
-</html>
+<?php require(__DIR__."/include/footer.php");
