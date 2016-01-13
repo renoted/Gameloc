@@ -15,7 +15,7 @@ if(isset($_GET['action']))  {
  	$platform = intval($_GET['platform']);		// tout ce qu'on récupère en GET est du string on le transforme en int
  	$available = $_GET['checkbox'];
 
- 	print_r($_GET);
+ 	// print_r($_GET);
 
  	// Si une plateforme est sélectionnée
  	if($platform > 0) {

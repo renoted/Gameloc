@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 12 Janvier 2016 à 11:38
+-- Généré le :  Mer 13 Janvier 2016 à 10:03
 -- Version du serveur :  5.6.25
 -- Version de PHP :  5.6.11
 
@@ -37,14 +37,23 @@ CREATE TABLE IF NOT EXISTS `games` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `plateform_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `games`
 --
 
 INSERT INTO `games` (`id`, `name`, `url_img`, `description`, `published_at`, `game_time`, `is_available`, `created_at`, `updated_at`, `plateform_id`) VALUES
-(3, 'Call of Duty', 'http://image.noelshack.com/fichiers/2015/18/1430678955-boiii-boxart-ps4.jpg', 'jhgkjg', '2016-01-06 00:00:00', 15, 1, '2016-01-11 17:05:36', '2016-01-11 17:05:36', 2);
+(3, 'Call of Duty', 'public/img/black-ops.jpg', 'jhgkjg', '2016-01-06 00:00:00', 15, 0, '2016-01-11 17:05:36', '2016-01-11 17:05:36', 2),
+(4, 'Assassin''s Creed Syndicate', 'public/img/unity.jpg', '<wdgsqrh', '2016-01-02 12:11:10', 12, 0, '2016-01-12 12:09:27', '2016-01-12 12:09:27', 3),
+(5, 'Batman', 'public/img/batman.jpg', 'FKJQSFKUG', '2016-01-05 00:00:00', 12, 0, '2016-01-12 12:21:12', '2016-01-12 12:21:12', 1),
+(6, 'Bloodborn', 'public/img/bloodborn.png', 'hfhtjudtjtj', '2016-01-02 00:00:00', 8, 1, '2016-01-12 12:22:43', '2016-01-12 12:22:43', 2),
+(7, 'Dota 2', 'public/img/dota.jpg', ',jgxjfykjykjkj', '2016-01-08 00:00:00', 15, 1, '2016-01-12 12:23:41', '2016-01-12 12:23:41', 3),
+(8, 'Fallout 4', 'public/img/fallout.jpg', 'x,jkjkjikjxj bhfdhhdh', '2016-01-05 00:00:00', 25, 1, '2016-01-12 12:24:44', '2016-01-12 12:24:44', 1),
+(9, 'Halo 5', 'public/img/halo.jpg', 'jddkdykkkd', '2016-01-01 00:00:00', 8, 1, '2016-01-12 12:25:36', '2016-01-12 12:25:36', 2),
+(10, 'Battlefield', 'public/img/hardline.jpg', 'kl<dgs<gljgklj', '2016-01-12 00:00:00', 15, 1, '2016-01-12 12:26:49', '2016-01-12 12:26:49', 3),
+(11, 'Just Cause 3', 'public/img/just-cause.jpg', ';gjshrkjqshkliq(yhe', '2016-01-01 00:00:00', 12, 1, '2016-01-12 12:27:36', '2016-01-12 12:27:36', 1),
+(12, 'League of legends', 'public/img/league-of-legends.jpg', 'ghughoiqgoirq', '2016-01-10 00:00:00', 20, 1, '2016-01-12 12:28:48', '2016-01-12 12:28:48', 1);
 
 -- --------------------------------------------------------
 
@@ -126,7 +135,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `games`
 --
 ALTER TABLE `games`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT pour la table `plateforms`
 --
