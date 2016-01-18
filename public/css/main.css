@@ -20,7 +20,7 @@ body {
 
 
 @media (min-width: 992px) { 
-	.container {
+	#divContainer {
 		width: 50%;
 	}
 
@@ -52,4 +52,15 @@ html, body {
 
 .adminPage {
 	padding-left: 20%; 
+}
+
+.containerImg {
+	width: 100%;
+	padding: 0;
+	border: solid black 1px;
+	text-align: center;
+}
+
+.imgGame {
+	width: 100%;
 }
