@@ -7,7 +7,8 @@ $page = "catalogue";
 
 require(__DIR__.'/functions.php');
 
-check_Logged_in();
+// On peut accéder au catalogue même sans être identifié
+// check_Logged_in();
 
 // Lorsqu'on charge la page catalog.php, c'est à dire qu'il n'y a pas de page envoyé en get dans l'url
 // ou que le bouton n'a pas été submit

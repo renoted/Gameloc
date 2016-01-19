@@ -52,7 +52,7 @@
           unset($resultUser['password']);
           $_SESSION['user'] = $resultUser;
 
-          // On redirige l'utilisateur vers la page protégée profile.php
+          // On redirige l'utilisateur vers la page profile.php
           header("Location: catalog.php");
           die();
         }
@@ -74,39 +74,34 @@
 ?>
 
 <!-- Affichage header.php puis page Login -->
-      <div class="jumbotron">
-          <div class="container">
-            <?php
-            include 'include/header.php';
-            ?>
-           
-          </div><!-- /.container -->
-      </div><!-- /.jumbotron -->
+<?php
+include 'include/header.php';
+?>
 
-      <!-- Copié de bootstrap : http://getbootstrap.com/css/#forms -->
+<!-- Copié de bootstrap : http://getbootstrap.com/css/#forms -->
 
-      <div class="container">
+<div class="container">
 
-        <form method="POST" action="#">
+  <form method="POST" action="#">
 
-            <?php print_error_message($errors, "connexion"); ?>
+      <?php print_error_message($errors, "connexion"); ?>
 
-            <div class="form-group">
-              <label for="email">Adresse électronique</label>
-              <input type="text" class="form-control" id="email" name="email" placeholder="Email">
-              <?php print_error_message($errors, "email"); ?>
-            </div>
+      <div class="form-group">
+        <label for="email">Adresse électronique</label>
+        <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+        <?php print_error_message($errors, "email"); ?>
+      </div>
 
-            <div class="form-group">
-              <label for="password">Mot de passe</label>
-              <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-              <?php print_error_message($errors, "password"); ?>
-            </div>
-            
-            <button type="submit" name="submitBtn" class="btn btn-primary btn-index">Valider</button>
-        </form>
-        <a href="forgotPassword.php">Mot de passe oublié ?</a>
-      </div><!-- /.container
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        <?php print_error_message($errors, "password"); ?>
+      </div>
+      
+      <button type="submit" name="submitBtn" class="btn btn-primary btn-index">Valider</button>
+  </form>
+  <a href="forgotPassword.php">Mot de passe oublié ?</a>
+</div><!-- /.container
  
 
 
