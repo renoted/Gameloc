@@ -22,6 +22,7 @@
 		
 		if ($userRole=="admin"); {
 			// utilisateur identifié comme admin - affichage menu complémentaire
+			// TODO partie à revoir : apparait pour des non administrateurs
 			?>
 			<li role="se connecter"><a href="login.php">Se connecter</a></li>
 			<li role="administrer"><a href="admin.php">Administrer</a></li>
